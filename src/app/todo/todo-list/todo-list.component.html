@@ -22,9 +22,9 @@
         Add
       </button>
     </form>
-    <div class="w-80 mx-auto mt-6" *ngIf="todos">
+    <div class="w-80 mx-auto mt-6" *ngIf="todoItems$ | async">
       <div
-        *ngFor="let todo of todos"
+        *ngFor="let todo of todoItems$ | async; trackBy: trackById"
         [class.completed]="todo.isDone"
         class="mb-3 shadow-md rounded-lg px-6 py-4 bg-slate-100 text-gray-700 flex items-center space-x-4 duration-500 transition-all"
         [@simpleFadeAnimation]="'in'"
@@ -32,7 +32,7 @@
         <input
           (change)="toggleItem(todo)"
           type="checkbox"
-          class="form-checkbox rounded-sm text-green-500 focus:ring-0 h-5 w-5"
+          class="form-checkbox rounded-sm text-green-500 focus:ring-0 h-5 w-5 focus:ring-offset-0"
           name=""
           id=""
         />

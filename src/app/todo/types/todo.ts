@@ -3,3 +3,7 @@ export interface TodoModel {
   title: string;
   isDone: boolean;
 }
+
+export interface TodoStateModel {
+  todos: TodoModel[];
+}

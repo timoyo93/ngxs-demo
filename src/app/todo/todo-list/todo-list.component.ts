@@ -6,7 +6,11 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { TodoSelectors } from 'src/app/store/todo-selectors';
 import { TodoModel } from '../types/todo';
+import { AddTodo, ToggleCompleted } from 'src/app/store/todo-actions';
 
 @Component({
   selector: 'app-todo-list',
@@ -26,26 +30,22 @@ import { TodoModel } from '../types/todo';
   ],
 })
 export class TodoListComponent implements OnInit {
+  @Select(TodoSelectors.todoItems) todoItems$!: Observable<TodoModel[]>;
   todoName: string = '';
-  todos: TodoModel[] = [];
-  constructor() {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {}
 
+  trackById(index: number, item: TodoModel): number {
+    return item.id;
+  }
+
   addTodo(): void {
-    if (!this.todoName) return;
-    const newTodo: TodoModel = {
-      id: this.todos.length + 1,
-      title: this.todoName,
-      isDone: false,
-    };
-    this.todos.push(newTodo);
+    this.store.dispatch(new AddTodo(this.todoName));
     this.todoName = '';
-    return;
   }
 
   toggleItem(todo: TodoModel) {
-    const index = this.todos.findIndex((i) => i.id === todo.id);
-    this.todos[index].isDone = !this.todos[index].isDone;
+    this.store.dispatch(new ToggleCompleted(todo));
   }
 }
