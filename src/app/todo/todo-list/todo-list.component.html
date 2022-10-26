@@ -1,1 +1,43 @@
-<p>todo-list works!</p>
+<div
+  class="bg-white p-10 rounded-xl w-[60vw] shadow-xl h-[80vh] flex flex-col items-center"
+>
+  <div class="w-full">
+    <h1 class="text-center text-4xl">
+      Todo List with <span class="underline decoration-blue-600">Ngxs</span> 🤓
+    </h1>
+    <form class="mt-8 mx-auto w-fit" #todoForm="ngForm" (ngSubmit)="addTodo()">
+      <input
+        class="rounded-md border-2 border-green-500"
+        type="text"
+        name="todoName"
+        placeholder="Add Todo"
+        required
+        autocomplete="off"
+        [(ngModel)]="todoName"
+      />
+      <button
+        class="bg-green-500 text-white py-2.5 px-4 rounded-md ml-2"
+        type="submit"
+      >
+        Add
+      </button>
+    </form>
+    <div class="w-80 mx-auto mt-6" *ngIf="todos">
+      <div
+        *ngFor="let todo of todos"
+        [class.completed]="todo.isDone"
+        class="mb-3 shadow-md rounded-lg px-6 py-4 bg-slate-100 text-gray-700 flex items-center space-x-4 duration-500 transition-all"
+        [@simpleFadeAnimation]="'in'"
+      >
+        <input
+          (change)="toggleItem(todo)"
+          type="checkbox"
+          class="form-checkbox rounded-sm text-green-500 focus:ring-0 h-5 w-5"
+          name=""
+          id=""
+        />
+        <p class="text-lg">{{ todo.title }}</p>
+      </div>
+    </div>
+  </div>
+</div>

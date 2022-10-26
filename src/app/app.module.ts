@@ -6,11 +6,13 @@ import { TodoModule } from './todo/todo.module';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     TodoModule,
     NgxsModule.forRoot([], {
