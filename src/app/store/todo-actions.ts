@@ -9,3 +9,8 @@ export class ToggleCompleted {
   static readonly type = '[Todo] Toggle Completed';
   constructor(public todo: TodoModel) {}
 }
+
+export class DeleteTodo {
+  static readonly type = '[Todo] Delete Todo';
+  constructor(public id: number) {}
+}

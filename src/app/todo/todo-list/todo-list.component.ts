@@ -10,7 +10,11 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { TodoSelectors } from 'src/app/store/todo-selectors';
 import { TodoModel } from '../types/todo';
-import { AddTodo, ToggleCompleted } from 'src/app/store/todo-actions';
+import {
+  AddTodo,
+  DeleteTodo,
+  ToggleCompleted,
+} from 'src/app/store/todo-actions';
 
 @Component({
   selector: 'app-todo-list',
@@ -47,5 +51,9 @@ export class TodoListComponent implements OnInit {
 
   toggleItem(todo: TodoModel) {
     this.store.dispatch(new ToggleCompleted(todo));
+  }
+
+  deleteTodo(id: number) {
+    this.store.dispatch(new DeleteTodo(id));
   }
 }

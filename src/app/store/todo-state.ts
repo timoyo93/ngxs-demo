@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { TodoModel, TodoStateModel } from '../todo/types/todo';
-import { AddTodo, ToggleCompleted } from './todo-actions';
+import { AddTodo, DeleteTodo, ToggleCompleted } from './todo-actions';
 
 @State<TodoStateModel>({
   name: 'todo',
@@ -12,10 +12,9 @@ import { AddTodo, ToggleCompleted } from './todo-actions';
 @Injectable()
 export class TodoState {
   @Action(AddTodo)
-  addTodo(ctx: StateContext<TodoStateModel>, action: AddTodo) {
-    const todoName = action.todoName;
-    const state = ctx.getState();
+  addTodo(ctx: StateContext<TodoStateModel>, { todoName }: AddTodo) {
     if (!todoName) return;
+    const state = ctx.getState();
     const newTodo: TodoModel = {
       id: state.todos.length + 1,
       title: todoName,
@@ -41,6 +40,15 @@ export class TodoState {
       }
       return item;
     });
+    ctx.patchState({
+      todos: [...newTodos],
+    });
+  }
+
+  @Action(DeleteTodo)
+  deleteTodo(ctx: StateContext<TodoStateModel>, { id }: DeleteTodo) {
+    const state = ctx.getState();
+    const newTodos = state.todos.filter((todo) => todo.id !== id);
     ctx.patchState({
       todos: [...newTodos],
     });
